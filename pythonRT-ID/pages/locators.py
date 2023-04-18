@@ -13,6 +13,13 @@ class AuthLocators:
     GET_CODE_BTN = (By.ID, "otp_get_code")
     EMAIL_PAGE = (By.LINK_TEXT, "Почта")
     EMAIL_USERNAME = (By.NAME, "username")
+    LNK_REG = (By.LINK_TEXT, "Зарегистрироваться")
+    REG_NAME = (By.NAME, "firstName")
+    REG_FAM = (By.NAME, "lastName")
+    REG_EMAIL = (By.ID, "address")
+    REG_PASS = (By.ID, "password")
+    REG_PASS_CONFIRM = (By.ID, "password-confirm")
+
 
 
 class LKLocators:
