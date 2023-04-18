@@ -340,7 +340,7 @@ def test_authorisation_by_code_to_phone(selenium):
 
     try:
         # Проверка выполнения сценария по отправке кода
-        assert page.get_title_input_code() == "Код подтверждения отправлен"
+        assert page.get_title_input_code() == "Авторизация по коду"
         with open(log_file_name, 'a') as LOG_FILE:
             print(f'Тест отправки кода авторизации на телефон пройден', file=LOG_FILE)
 
