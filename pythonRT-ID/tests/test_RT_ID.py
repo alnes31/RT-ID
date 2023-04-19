@@ -43,15 +43,31 @@ def test_authorisation_by_email(selenium):
     page.btn_auth_click()
     try:
         assert page.get_positive_lastname() == LASTNAME
-        print('Тест позитивного сценария авторизации через email пройден')
         with open(log_file_name, 'a') as LOG_FILE:
             print(f'Тест позитивного сценария авторизации через email пройден', file=LOG_FILE)
     except AssertionError as AE:
-        print(f'Тест позитивного сценария авторизации через email НЕ пройден по причине: \n    {AE}')
         with open(log_file_name, 'a') as LOG_FILE:
             print(f'Тест позитивного сценария авторизации через email НЕ пройден '
                   f'по причине: \n    {AE}', file=LOG_FILE)
 
+
+def test_authorisation_by_email_negative(selenium):
+    # Негативный тест авторизации по Email
+    with open(log_file_name, 'a') as LOG_FILE:
+        print(f'\nТест негативного сценария авторизации через email {datetime.datetime.now()}', file=LOG_FILE)
+    page = AuthPage(selenium)
+    page.btn_email_click()
+    page.enter_username(EMAIL)
+    page.enter_pass(PSSWRD+"1")
+    page.btn_auth_click()
+    try:
+        assert page.get_error_message() == "Неверный логин или пароль"
+        with open(log_file_name, 'a') as LOG_FILE:
+            print(f'Тест негативного сценария авторизации через email пройден', file=LOG_FILE)
+    except AssertionError as AE:
+        with open(log_file_name, 'a') as LOG_FILE:
+            print(f'Тест негативного сценария авторизации через email НЕ пройден '
+                  f'по причине: \n    {AE}', file=LOG_FILE)
 
 def test_authorisation_by_phone(selenium):
     # Позитивный тест авторизации по номеру телефона
@@ -69,6 +85,25 @@ def test_authorisation_by_phone(selenium):
     except AssertionError as AE:
         with open(log_file_name, 'a') as LOG_FILE:
             print(f'Тест позитивного сценария авторизации через телефон НЕ пройден '
+                  f'по причине: \n    {AE}', file=LOG_FILE)
+
+
+def test_authorisation_by_phone_negative(selenium):
+    # Негативный тест авторизации по номеру телефона
+    with open(log_file_name, 'a') as LOG_FILE:
+        print(f'\nТест негативного сценария авторизации через телефон {datetime.datetime.now()}', file=LOG_FILE)
+    page = AuthPage(selenium)
+    page.btn_phone_click()
+    page.enter_username(PHONE)
+    page.enter_pass(PSSWRD+"1")
+    page.btn_auth_click()
+    try:
+        assert page.get_error_message() == "Неверный логин или пароль"
+        with open(log_file_name, 'a') as LOG_FILE:
+            print(f'Тест негативного сценария авторизации через телефон пройден', file=LOG_FILE)
+    except AssertionError as AE:
+        with open(log_file_name, 'a') as LOG_FILE:
+            print(f'Тест негативного сценария авторизации через телефон НЕ пройден '
                   f'по причине: \n    {AE}', file=LOG_FILE)
 
 
@@ -91,15 +126,56 @@ def test_authorisation_by_login(selenium):
                   f'по причине: \n    {AE}', file=LOG_FILE)
 
 
+def test_authorisation_by_login_negative(selenium):
+    # Негативный тест авторизации по Логину
+    with open(log_file_name, 'a') as LOG_FILE:
+        print(f'\nТест негативного сценария авторизации через логин {datetime.datetime.now()}', file=LOG_FILE)
+    page = AuthPage(selenium)
+    page.btn_login_click()
+    page.enter_username(LOGIN)
+    page.enter_pass(PSSWRD+"1")
+    page.btn_auth_click()
+    try:
+        assert page.get_error_message() == "Неверный логин или пароль"
+        with open(log_file_name, 'a') as LOG_FILE:
+            print(f'Тест негативного сценария авторизации через логин пройден', file=LOG_FILE)
+    except AssertionError as AE:
+        with open(log_file_name, 'a') as LOG_FILE:
+            print(f'Тест негативного сценария авторизации через логин НЕ пройден '
+                  f'по причине: \n    {AE}', file=LOG_FILE)
+
+
+def test_authorisation_by_ls(selenium):
+    # Позитивный тест авторизации по номеру лицевого счёта
+    with open(log_file_name, 'a') as LOG_FILE:
+        print(f'\nТест позитивного сценария авторизации через лицевой счёт '
+              f'(ЛС) {datetime.datetime.now()}', file=LOG_FILE)
+    page = AuthPage(selenium)
+    page.btn_ls_click()
+    page.enter_username(LS)
+    page.enter_pass(PSSWRD)
+    page.btn_auth_click()
+    title_text = page
+    try:
+        # Проверка успешной авторизации
+        assert title_text == 'Ростелеком «Старт»' or 'https://start.rt.ru'
+        with open(log_file_name, 'a') as LOG_FILE:
+            print(f'Тест позитивного сценария авторизации через ЛС пройден', file=LOG_FILE)
+    except AssertionError as AE:
+        with open(log_file_name, 'a') as LOG_FILE:
+            print(f'Тест позитивного сценария авторизации через ЛС НЕ пройден '
+                  f'по причине: \n    {AE}', file=LOG_FILE)
+
+
 def test_authorisation_by_ls_negative(selenium):
-    # Негативный тест авторизации по несуществующему номеру лицевого счёта
+    # Негативный тест авторизации по номеру лицевого счёта
     with open(log_file_name, 'a') as LOG_FILE:
         print(f'\nТест негативного сценария авторизации через лицевой счёт '
               f'(ЛС) {datetime.datetime.now()}', file=LOG_FILE)
     page = AuthPage(selenium)
     page.btn_ls_click()
     page.enter_username(LS)
-    page.enter_pass(PSSWRD)
+    page.enter_pass(PSSWRD+"1")
     page.btn_auth_click()
     try:
         assert page.get_error_message() == "Неверный логин или пароль"
